@@ -25,7 +25,7 @@ mentions = api.mentions_timeline()
 print(mentions[0].text.split(" ")[1])
 
 
-#or mention in mentions:
+#for mention in mentions:
 tweetid = str(mentions[0].id)
 username = mentions[0].user.screen_name
 city = mentions[0].text.split(" ")[1]
@@ -40,9 +40,13 @@ Data=Weather.weather                 # get out data in the mentioned location
 
 
 temp = Data.temperature(unit='celsius')
-avg_temp = temp["temp"]
-max_temp = temp["temp_max"]
-min_temp = temp["temp_min"]
+avg_temp = round(temp["temp"],1)
+max_temp = round(temp["temp_max"],1)
+min_temp = round(temp["temp_min"],1)
+
+print(avg_temp)
+print(max_temp)
+print(min_temp)
 
 #post a tweet
-api.update_status("@" + username + " The current temperature in " + city + " is: " + str(avg_temp) + " C degree. The maximal temperature for today will be " + str(max_temp) + " C degree and the minimal temperature " + str(min_temp) + " C degree!", in_reply_to_status_id =tweetid)
+api.update_status("@" + username + " The current temperature in " + city + " is: " + str(avg_temp) + " C degree. The maximal temperature for today will be " + str(max_temp) + " C degree and the minimal temperature " + str(min_temp) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id =tweetid)
