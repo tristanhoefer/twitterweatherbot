@@ -2,6 +2,7 @@ import tweepy
 import pyowm
 
 #twitter auth keys
+
 consumer_key = "psh1Byop2V2y1GtriImm6U7nD"
 
 consumer_secret= "OMoVLHoEsfsK3Y3bVonVtlXV2qXmkUQxqQC0nDZRvRvRZtSi3E"
