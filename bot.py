@@ -11,7 +11,6 @@ def access_api(consumer_key, consumer_secret, key, secret):
 
 def get_mentions(api):
     mentions = api.mentions_timeline()
-    print(mentions[0].text.split(" ")[1])
     return mentions
 
 def get_tweetid(mentions):
@@ -27,6 +26,7 @@ def get_city(mentions):
         city = mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
     else:
         city = mentions[0].text.split(" ")[1]
+    print(city)
     return city
 
 def access_owmapi():
@@ -36,11 +36,15 @@ def access_owmapi():
     print(OpenWMap)
     return OpenWMap                # Use API key to get data
 
-def get_weather(OpenWMap, city):
-    mgr = OpenWMap.weather_manager()
-    Weather=mgr.weather_at_place(city)  # give where you need to see the weather
-    Data=Weather.weather                 # get out data in the mentioned location
-    return Data
+def get_weather(OpenWMap, city, api):
+    try: 
+        mgr = OpenWMap.weather_manager()
+        Weather=mgr.weather_at_place(city)  # give where you need to see the weather
+        Data=Weather.weather               # get out data in the mentioned location
+        return Data
+    except: #if the city in the tweet doesn't exists
+        error_tweet("I don't know this city...are you sure you typed it correctly?:)", api)
+
 
 def get_avgtemp(Data):
     temp = Data.temperature(unit='celsius')
@@ -61,10 +65,17 @@ def post_tweet(api):    #post a tweet
     mentions = get_mentions(api)
     OpenWMap = access_owmapi()
     city = get_city(mentions)
-    data = get_weather(OpenWMap, city)
+    data = get_weather(OpenWMap, city, api)
+    if data == None: #if the city doesnt exist return directly (error tweet printed)
+        return
     api.update_status("@" + get_username(mentions) + " The current temperature in " + city + " is: " + str(get_avgtemp(data)) + 
     " C degree. The maximal temperature for today will be " + str(get_maxtemp(data)) + " C degree and the minimal temperature " + 
     str(get_mintemp(data)) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id = get_tweetid(mentions))
+
+def error_tweet(answer, api):
+    mentions = get_mentions(api)
+    api.update_status("@" + get_username(mentions) + " " + answer, in_reply_to_status_id = get_tweetid(mentions))
+
 
 
 #post a tweet
