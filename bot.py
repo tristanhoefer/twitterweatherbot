@@ -1,12 +1,12 @@
 import tweepy
 import pyowm
-import secretfiles
+import apikeys
 #twitter auth keys
 
-consumer_key = secretfiles.consumer_key
-consumer_secret= secretfiles.consumer_secret
-key = secretfiles.key
-secret = secretfiles.secret
+consumer_key = apikeys.consumer_key
+consumer_secret= apikeys.consumer_secret
+key = apikeys.key
+secret = apikeys.secret
 
 def access_api(consumer_key, consumer_secret, key, secret):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -33,7 +33,7 @@ def get_city(mentions):
 
 def access_owmapi():
 #access OWM api
-    APIKEY= secretfiles.APIKEY                #your API Key here as string
+    APIKEY= apikeys.APIKEY                #your API Key here as string
     OpenWMap=pyowm.OWM(APIKEY)  
     print(OpenWMap)
     return OpenWMap                # Use API key to get data

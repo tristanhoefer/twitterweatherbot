@@ -1,12 +1,12 @@
 import tweepy
 import pyowm
-import secretfiles
+import apikeys
 import bot
 
-consumer_key = secretfiles.consumer_key
-consumer_secret= secretfiles.consumer_secret
-key = secretfiles.key
-secret = secretfiles.secret
+consumer_key = apikeys.consumer_key
+consumer_secret= apikeys.consumer_secret
+key = apikeys.key
+secret = apikeys.secret
 
 api = bot.access_api(consumer_key, consumer_secret, key, secret)
 
