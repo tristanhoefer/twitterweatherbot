@@ -1,4 +1,4 @@
 secretfiles.py
 .vscode
-__pycache
+__pycache__
 apikeys.py

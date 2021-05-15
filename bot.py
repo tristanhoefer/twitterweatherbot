@@ -3,11 +3,6 @@ import pyowm
 import apikeys
 #twitter auth keys
 
-consumer_key = apikeys.consumer_key
-consumer_secret= apikeys.consumer_secret
-key = apikeys.key
-secret = apikeys.secret
-
 def access_api(consumer_key, consumer_secret, key, secret):
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
