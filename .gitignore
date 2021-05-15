@@ -1,2 +1,3 @@
-# Don't track content of this files or folders
 secretfiles.py
+.vscode
+__pycache
