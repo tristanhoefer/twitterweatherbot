@@ -31,19 +31,6 @@ def get_city(mentions):
     city = mentions[0].text.split(" ")[1]
     return city
 
-#print ("Average Temp. Currently ", temp['temp']) # get avg. tmp
-#print ("Max Temp. Currently ", temp['temp_max']) # get max tmp
-#print ("Min Temp. Currently ", temp['temp_min']) # get min tmp>>
-
-#mentions = api.mentions_timeline()
-#print(mentions[0].text.split(" ")[1])
-
-
-#for mention in mentions:
-#tweetid = str(mentions[0].id)
-#username = mentions[0].user.screen_name
-#city = mentions[0].text.split(" ")[1]
-
 def access_owmapi():
 #access OWM api
     APIKEY= secretfiles.APIKEY                #your API Key here as string
@@ -71,10 +58,6 @@ def get_mintemp(Data):
     temp = Data.temperature(unit='celsius')
     min_temp = round(temp["temp_min"],1)
     return min_temp
-
-#print(avg_temp)
-#print(max_temp)
-#print(min_temp)
 
 def post_tweet(api):    #post a tweet
     mentions = get_mentions(api)
