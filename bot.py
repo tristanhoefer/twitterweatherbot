@@ -23,7 +23,10 @@ def get_username(mentions):
     return username
 
 def get_city(mentions):
-    city = mentions[0].text.split(" ")[1]
+    if len(mentions[0].text.split(" ")) > 2:
+        city = mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
+    else:
+        city = mentions[0].text.split(" ")[1]
     return city
 
 def access_owmapi():
