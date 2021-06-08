@@ -22,18 +22,13 @@ def get_username(mentions):
     return username
 
 def get_city(mentions):
-    if mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition":
+    if mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition": #if the second word is condition the first must be the city
         print(mentions[0].text.split(" ")[1])
-        return mentions[0].text.split(" ")[1]
-    elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
+        return mentions[0].text.split(" ")[1] #return the city
+    elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition": #if the third word is condition the first and second must be the city
         print(mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2])
-        return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
-    #if len(mentions[0].text.split(" ")) > 2:
-    #    city = mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
-   # else:
-    #    city = mentions[0].text.split(" ")[1]
-    #print(city)
-    #return city
+        return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2] #return the city
+
 
 def check_for_condition(mentions):
     if mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition" or mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
@@ -74,16 +69,16 @@ def get_mintemp(Data):
     return min_temp
 
 def get_condition(Data):
-    condition = Data.status
+    condition = Data.status #get weather status
     return condition
 
-def check_request_reason(mentions, api):
+def check_request_reason(mentions, api): #controlls which kind of tweet to send (basic or condition)
     if check_for_condition(mentions):
         condition_tweet(api, mentions)
     else:
         basic_tweet(api, mentions)
 
-def basic_tweet(api, mentions):    #post a tweet
+def basic_tweet(api, mentions): #basic tweet containing current, max and min temp
     OpenWMap = access_owmapi()
     city = get_city(mentions)
     data = get_weather(OpenWMap, city, api)
@@ -93,7 +88,7 @@ def basic_tweet(api, mentions):    #post a tweet
     " C degree. The maximal temperature for today will be " + str(get_maxtemp(data)) + " C degree and the minimal temperature " + 
     str(get_mintemp(data)) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id = get_tweetid(mentions))
 
-def condition_tweet(api, mentions):
+def condition_tweet(api, mentions): #condition tweet containing current temp and weather condition
     OpenWMap = access_owmapi()
     city = get_city(mentions)
     data = get_weather(OpenWMap, city, api)
@@ -102,12 +97,10 @@ def condition_tweet(api, mentions):
     api.update_status("@" + get_username(mentions) + " The current temperature in " + city + " is: " + str(get_avgtemp(data)) + 
     " C degree. The current weather condition is: " + get_condition(data) + ". Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id = get_tweetid(mentions))
 
-def error_tweet(answer, api):
+def error_tweet(answer, api): #post the answer if there is a problem
     mentions = get_mentions(api)
     api.update_status("@" + get_username(mentions) + " " + answer, in_reply_to_status_id = get_tweetid(mentions))
 
 
 #post a tweet
 #api.update_status("@" + username + " The current temperature in " + city + " is: " + str(avg_temp) + " C degree. The maximal temperature for today will be " + str(max_temp) + " C degree and the minimal temperature " + str(min_temp) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id =tweetid)
-
-# aktuelles Problem: wenn condition im tweet enthalten ist wird condition mit als city erkannt, muss aber seperat erkannt werden
