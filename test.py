@@ -9,6 +9,10 @@ key = apikeys.key
 secret = apikeys.secret
 
 api = bot.access_api(consumer_key, consumer_secret, key, secret)
-mentions = bot.get_mentions(api)
 
-bot.check_request_reason(mentions, api)
+#bot.post_tweet(api)
+
+weather_api = bot.access_owmapi()
+data = bot.get_weather(weather_api, "London", api)
+print(data.status)
+print(type(data))
