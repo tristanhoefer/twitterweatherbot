@@ -25,15 +25,12 @@ def get_city(mentions):
     if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
         print(mentions[0].text.split(" ")[1])
         return mentions[0].text.split(" ")[1]
-    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"):
+    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"): #if city name one word and condition is asked
         print(mentions[0].text.split(" ")[1])
         return mentions[0].text.split(" ")[1]
-    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition": 
+    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition": #if city name consists of two words, watch out for "c"ondition
         print(mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2])
         return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
-    #elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"): #if the second word is condition the first must be the city
-    #    print(mentions[0].text.split(" ")[1])
-    #    return mentions[0].text.split(" ")[1] #return the city
     elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition": #if the third word is condition the first and second must be the city
         print(mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2])
         return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2] #return the city
@@ -43,11 +40,11 @@ def check_for_condition(mentions):
 
     if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
         return False
-    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition":
+    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition": #if city with two words and no condition, watch out for "c"ondition
         return False
-    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"):
+    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"): #if one word city and condition is asked
         return True
-    elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
+    elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition": #if two word city and condition
         return True
     else:
         return False
