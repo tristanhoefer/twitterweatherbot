@@ -23,10 +23,17 @@ def get_username(mentions):
 
 def get_city(mentions):
     if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
-        return mentions[0].text.split(" ")[1]
-    elif mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition": #if the second word is condition the first must be the city
         print(mentions[0].text.split(" ")[1])
-        return mentions[0].text.split(" ")[1] #return the city
+        return mentions[0].text.split(" ")[1]
+    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"):
+        print(mentions[0].text.split(" ")[1])
+        return mentions[0].text.split(" ")[1]
+    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition": 
+        print(mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2])
+        return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2]
+    #elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"): #if the second word is condition the first must be the city
+    #    print(mentions[0].text.split(" ")[1])
+    #    return mentions[0].text.split(" ")[1] #return the city
     elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition": #if the third word is condition the first and second must be the city
         print(mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2])
         return mentions[0].text.split(" ")[1] + " " + mentions[0].text.split(" ")[2] #return the city
@@ -36,7 +43,9 @@ def check_for_condition(mentions):
 
     if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
         return False
-    elif mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition":
+    elif len(mentions[0].text.split(" ")) == 3 and mentions[0].text.split(" ")[2] != "condition":
+        return False
+    elif len(mentions[0].text.split(" ")) == 3 and (mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition"):
         return True
     elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
         return True
@@ -111,3 +120,5 @@ def error_tweet(answer, api): #post the answer if there is a problem
 
 #post a tweet
 #api.update_status("@" + username + " The current temperature in " + city + " is: " + str(avg_temp) + " C degree. The maximal temperature for today will be " + str(max_temp) + " C degree and the minimal temperature " + str(min_temp) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id =tweetid)
+
+#Achtung: Im moment ist es nur noch möglich condition klein zu schrieben, also nicht mit großem C, muss mir noch Gedanken machen wie ich das fixe
