@@ -22,7 +22,9 @@ def get_username(mentions):
     return username
 
 def get_city(mentions):
-    if mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition": #if the second word is condition the first must be the city
+    if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
+        return mentions[0].text.split(" ")[1]
+    elif mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition": #if the second word is condition the first must be the city
         print(mentions[0].text.split(" ")[1])
         return mentions[0].text.split(" ")[1] #return the city
     elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition": #if the third word is condition the first and second must be the city
@@ -31,7 +33,12 @@ def get_city(mentions):
 
 
 def check_for_condition(mentions):
-    if mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition" or mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
+
+    if len(mentions[0].text.split(" ")) == 2: #case if no condition and only cityname with one word given
+        return False
+    elif mentions[0].text.split(" ")[2] == "Condition" or mentions[0].text.split(" ")[2] == "condition":
+        return True
+    elif mentions[0].text.split(" ")[3] == "Condition" or mentions[0].text.split(" ")[3] == "condition":
         return True
     else:
         return False
@@ -86,7 +93,7 @@ def basic_tweet(api, mentions): #basic tweet containing current, max and min tem
         return
     api.update_status("@" + get_username(mentions) + " The current temperature in " + city + " is: " + str(get_avgtemp(data)) + 
     " C degree. The maximal temperature for today will be " + str(get_maxtemp(data)) + " C degree and the minimal temperature " + 
-    str(get_mintemp(data)) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id = get_tweetid(mentions))
+    str(get_mintemp(data)) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)☀️🌥⛈❄️", in_reply_to_status_id = get_tweetid(mentions))
 
 def condition_tweet(api, mentions): #condition tweet containing current temp and weather condition
     OpenWMap = access_owmapi()
@@ -95,7 +102,7 @@ def condition_tweet(api, mentions): #condition tweet containing current temp and
     if data == None: #if the city doesnt exist return directly (error tweet printed)
         return
     api.update_status("@" + get_username(mentions) + " The current temperature in " + city + " is: " + str(get_avgtemp(data)) + 
-    " C degree. The current weather condition is: " + get_condition(data) + ". Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id = get_tweetid(mentions))
+    " C degree. The current weather condition is: " + get_condition(data) + ". Regardless of the weather I hope you enjoy your day :)☀️🌥⛈❄️", in_reply_to_status_id = get_tweetid(mentions))
 
 def error_tweet(answer, api): #post the answer if there is a problem
     mentions = get_mentions(api)
