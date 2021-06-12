@@ -119,3 +119,17 @@ def error_tweet(answer, api): #post the answer if there is a problem
 #api.update_status("@" + username + " The current temperature in " + city + " is: " + str(avg_temp) + " C degree. The maximal temperature for today will be " + str(max_temp) + " C degree and the minimal temperature " + str(min_temp) + " C degree!" + " Regardless of the weather I hope you enjoy your day :)", in_reply_to_status_id =tweetid)
 
 #Achtung: Im moment ist es nur noch möglich condition klein zu schrieben, also nicht mit großem C, muss mir noch Gedanken machen wie ich das fixe
+
+"""
+TO-DO's:
+
+- Fehlermeldungen erweitern, zb. wenn condition falsch geschrieben ist usw.
+- Emojis für Wetter Condition hinzufügen, Emoji variiert je nach Condition
+- Bot online hosten
+- einen Weg überlegen wie ich den Code modularer machen könnte, wenn ich zb. noch weitere Statusabfragen außer condition hinzufügen kann
+Idee: Universelle-Funktion die Art von Status übergeben bekommt und darauf immer gleich reagiert, wenn zb. einfach anderes Wort als condition
+- darüber nachdenken ob ich Klassen brauche
+- coole Features wie zb. Tag mit bestem Wetter oder jeden Tag Wetter in einer random Stadt zu einer bestimmten Zeit tweeten,
+Feature mit bemerkenswerten historischen Daten, oder zb. "Heute vor 25 Jahren"
+ 
+"""
