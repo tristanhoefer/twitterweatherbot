@@ -105,10 +105,22 @@ def condition_tweet(api, mentions): #condition tweet containing current temp and
     OpenWMap = access_owmapi()
     city = get_city(mentions)
     data = get_weather(OpenWMap, city, api)
+    condition = get_condition(data)
     if data == None: #if the city doesnt exist return directly (error tweet printed)
         return
+
+    if condition == "Clear":
+        condition = "☀️ Clear ☀️"
+    elif condition == "Rain":
+        condition = "🌧 Rain 🌧"
+    elif condition == "Clouds":
+        condition = "☁️ Clouds ☁️"
+    elif condition == "Thunderstorm":
+        condition = "⛈ Thunderstorm ⛈"
+    elif condition == "Snow":
+        condition = "🌨 Snow ❄️"
     api.update_status("@" + get_username(mentions) + " The current temperature in " + city + " is: " + str(get_avgtemp(data)) + 
-    " C degree. The current weather condition is: " + get_condition(data) + ". Regardless of the weather I hope you enjoy your day :)☀️🌥⛈❄️", in_reply_to_status_id = get_tweetid(mentions))
+    " C degree. The current weather condition is: " + condition + ". Regardless of the weather I hope you enjoy your day :)☀️🌥⛈❄️", in_reply_to_status_id = get_tweetid(mentions))
 
 def error_tweet(answer, api): #post the answer if there is a problem
     mentions = get_mentions(api)
@@ -123,7 +135,7 @@ def error_tweet(answer, api): #post the answer if there is a problem
 """
 TO-DO's:
 
-- Fehlermeldungen erweitern, zb. wenn condition falsch geschrieben ist usw.
+- Fehlermeldungen erweitern, zb. wenn condition falsch geschrieben ist usw. 👍
 - Emojis für Wetter Condition hinzufügen, Emoji variiert je nach Condition
 - Bot online hosten
 - einen Weg überlegen wie ich den Code modularer machen könnte, wenn ich zb. noch weitere Statusabfragen außer condition hinzufügen kann
@@ -131,5 +143,6 @@ Idee: Universelle-Funktion die Art von Status übergeben bekommt und darauf imme
 - darüber nachdenken ob ich Klassen brauche
 - coole Features wie zb. Tag mit bestem Wetter oder jeden Tag Wetter in einer random Stadt zu einer bestimmten Zeit tweeten,
 Feature mit bemerkenswerten historischen Daten, oder zb. "Heute vor 25 Jahren"
+- Mondphase abfragen
  
 """
