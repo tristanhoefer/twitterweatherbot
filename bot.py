@@ -63,7 +63,7 @@ def get_weather(OpenWMap, city, api):
         Data=Weather.weather               # get out data in the mentioned location
         return Data
     except: #if the city in the tweet doesn't exists
-        error_tweet("I don't know this city...are you sure you typed it correctly?:)", api)
+        error_tweet("I don't know this city or statement...are you sure you typed it correctly?:)", api)
 
 
 def get_avgtemp(Data):
